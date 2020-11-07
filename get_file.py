@@ -1,4 +1,4 @@
-#Web scraping the transcripts of 5 commedians from scrapsfromtheloft.com
+# Web scraping the transcripts of 5 commedians from scrapsfromtheloft.com
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -10,10 +10,11 @@ urls = ["https://scrapsfromtheloft.com/2018/11/21/trevor-noah-son-of-patricia-tr
         "https://scrapsfromtheloft.com/2018/05/05/john-mulaney-kid-gorgeous-at-radio-city-full-transcript/",
         "https://scrapsfromtheloft.com/2020/05/01/maria-bamford-weakness-is-the-brand-transcript/"]
 
+
 def url_transcript(url):
     """
     Scrapes webpages from scrapsfromtheloft.com containing stand up comedy transcripts
-    Args: 
+    Args:
         url: A string representing the webpage url of the transcript
     returns:
         A string representing the the required transcript text
@@ -27,13 +28,14 @@ def url_transcript(url):
         return text
     else:
         raise Exception("Invalid input")
-   
+
+
 def check_file_exist(comedian, url):
     """
     Check whether the file exists in the form comedian_name.text given the comedian name and url
-    Args: 
+    Args:
         comedian: A string representing the name of the comedian
-        url: A string representing the webpage url of the transcript 
+        url: A string representing the webpage url of the transcript
     Returns: A string representing the the required transcript text
     """
     path = pathlib.Path(f"transcripts/{comedian}.txt")
@@ -41,31 +43,15 @@ def check_file_exist(comedian, url):
         with open("transcripts/" + comedian + ".txt", "r") as infile:
             return infile.readlines()
     else:
-        trans_text = url_transcript(url)
-        with open("transcripts/" + comedian + ".txt", "w") as outfile: #create a folder for each comedian and write transcripts
-            outfile.write(trans_text)
-        return trans_text
+        transcript_text = url_transcript(url)
+        # create a folder for each comedian and write transcripts
+        with open("transcripts/" + comedian + ".txt", "w") as outfile:
+            outfile.write(transcript_text)
+        return transcript_text
 
-comedian_names = ["Trevor", "Dave", "Joe", "John", "Maria"] 
+
+comedian_names = ["Trevor", "Dave", "Joe", "John", "Maria"]
 
 transcript_dict = {}
 for comedian, url in zip(comedian_names, urls):
     transcript_dict[comedian] = check_file_exist(comedian, url)
-
-
-  
-
-
-
-
-
-
-        
-    
-
-
-# if __name__ == "__main__":
-#     x=check_file_exist("Dave") 
-#     print(x)  
-
-     
